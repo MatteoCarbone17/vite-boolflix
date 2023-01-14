@@ -1,12 +1,18 @@
 <script>
-import { store } from '../src/store.js'
+import AppHeader from './components/AppHeader.vue'
+import AppMain from './components/AppMain.vue'
+import { store } from './store.js'
 import axios from 'axios'
 
 export default {
   name: 'App',
+  components :{
+        AppMain,
+        AppHeader,
+    },
+    
   data() {
     return {
-      return:
       store,
       ApiUrl: 'https://api.themoviedb.org/3/movie/550?api_key=d375deb50bb5135ee140c55f9476e44c'
     }
@@ -16,10 +22,9 @@ export default {
       axios.get(this.ApiUrl, {
 
       })
-        .then((response) => {
-
-        console.log(response.data)
-          // console.log(this.store.data)
+      .then((response) => {
+        this.store.dataStore = response.data 
+        console.log(this.store.dataStore)
 
         });
     },
@@ -27,7 +32,9 @@ export default {
   },
 
 created(){
-     this.getApi()}
+     this.getApi()
+    
+    }
 
 }
 
@@ -35,6 +42,11 @@ created(){
 
 
 <template>
+
+  <AppHeader />
+  <AppMain />
+  
+  <p>{{ store.data }}</p>
 
 </template>
 
