@@ -59,7 +59,10 @@ export default {
                         {{ movie.title }} {{ movie.name }}
                     </h6>
                     <p>
-                        <lang-flag :iso="movie.original_language" />
+                       <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" />
+                       <div v-else >
+                        <span><i class="fa-solid fa-globe"></i> Language not found </span>
+                       </div>
                         Rating: {{ getRating(movie.vote_average) }}
                     </p>
                     <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
