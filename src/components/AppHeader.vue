@@ -1,9 +1,13 @@
 <script>
 import { store } from '../store.js'
 import axios from 'axios'
+import LangFlag from 'vue-lang-code-flags'
 
 
 export default {
+    components: {
+        LangFlag,
+  },
     data() {
         return {
             store,
@@ -26,10 +30,13 @@ export default {
 
                 });
         },
-
-        getImagePath(imgPath){
-        return (this.ApiUrlImagePath+imgPath);
-    },
+        getImagePath(imgPath) {
+            return (this.ApiUrlImagePath + imgPath);
+        },
+        getRating(rating){
+           rating = Math.floor(rating / 2);
+           return rating;
+        }
 
     },
 }
@@ -45,17 +52,17 @@ export default {
         <div class="col-12">
             <ul>
                 <li v-for="movie in store.moviesList">
-                   <h5>
-                    {{ movie.original_title }} {{ movie.original_name  }}
-                   </h5>
-                   <h6>
-                    {{  movie.title }} {{ movie.name }}
-                   </h6>
-                   <p>
-                    {{ movie.original_language }}
-                     Rating: {{ movie.vote_average  }}
-                   </p>
-                   <img :src="getImagePath(movie.poster_path)" alt="" srcset="">
+                    <h5>
+                        {{ movie.original_title }} {{ movie.original_name }}
+                    </h5>
+                    <h6>
+                        {{ movie.title }} {{ movie.name }}
+                    </h6>
+                    <p>
+                        <lang-flag :iso="movie.original_language" />
+                        Rating: {{ getRating(movie.vote_average) }}
+                    </p>
+                    <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
                 </li>
 
             </ul>
