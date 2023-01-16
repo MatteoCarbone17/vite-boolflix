@@ -6,35 +6,39 @@ import axios from 'axios'
 
 export default {
   name: 'App',
-  components :{
-        AppMain,
-        AppHeader,
-    },
-    
+  components: {
+    AppMain,
+    AppHeader,
+  },
+
   data() {
     return {
       store,
-      ApiUrl: 'https://api.themoviedb.org/3/movie/550?api_key=d375deb50bb5135ee140c55f9476e44c'
+      apiKey:'d375deb50bb5135ee140c55f9476e44c',
+      ApiUrl: 'https://api.themoviedb.org/3/search/movie?'
     }
   },
   methods: {
     getApi() {
       axios.get(this.ApiUrl, {
-
+        params: {
+          api_key: this.apiKey,
+          query: 'harry',
+        }
       })
-      .then((response) => {
-        this.store.dataStore = response.data 
-        console.log(this.store.dataStore)
+        .then((response) => {
+          this.store.moviesList = response.data.results;
+          console.log(this.store.moviesList)
 
         });
     },
 
   },
 
-created(){
-     this.getApi()
-    
-    }
+  created() {
+    this.getApi()
+
+  }
 
 }
 
@@ -42,11 +46,13 @@ created(){
 
 
 <template>
+  <div>
+    <AppHeader />
+  </div>
+  <div>
+    <AppMain />
+  </div>
 
-  <AppHeader />
-  <AppMain />
-  
-  <p>{{ store.data }}</p>
 
 </template>
 
