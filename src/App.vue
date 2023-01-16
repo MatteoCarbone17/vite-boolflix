@@ -2,7 +2,7 @@
 import AppHeader from './components/AppHeader.vue'
 import AppMain from './components/AppMain.vue'
 import { store } from './store.js'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   name: 'App',
@@ -14,29 +14,27 @@ export default {
   data() {
     return {
       store,
-      apiKey:'d375deb50bb5135ee140c55f9476e44c',
-      ApiUrl: 'https://api.themoviedb.org/3/search/movie?'
     }
   },
   methods: {
-    getApi(searchQuery) {
-      axios.get(this.ApiUrl, {
-        params: {
-          api_key: this.apiKey,
-          query: searchQuery,
-        }
-      })
-        .then((response) => {
-          this.store.moviesList = response.data.results;
-          console.log(this.store.moviesList)
+    // getMovies(searchQuery) {
+    //   axios.get(this.ApiUrl, {
+    //     params: {
+    //       api_key: this.apiKey,
+    //       query: searchQuery,
+    //     }
+    //   })
+    //     .then((response) => {
+    //       this.store.moviesList = response.data.results;
+    //       console.log(this.store.moviesList)
 
-        });
-    },
+    //     });
+    // },
 
   },
 
   created() {
-    // this.getApi(searchQuery)
+   
 
   }
 
@@ -46,11 +44,6 @@ export default {
 
 
 <template>
-  <!-- <div class="col-12">
-            <label for="">Inserisci il film </label>
-            <input type="text" v-model="store.searchText" >
-            <button class="btn btn-success" @click="getApi(store.searchText)">cerca</button>
-  </div> -->
   <div>
     <AppHeader />
   </div>
