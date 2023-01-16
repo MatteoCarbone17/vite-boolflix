@@ -2,12 +2,14 @@
 import { store } from '../store.js'
 import axios from 'axios'
 import LangFlag from 'vue-lang-code-flags'
+// import vue3starRatings from "vue3-star-ratings";
 
 
 export default {
     components: {
         LangFlag,
-  },
+        // vue3starRatings,
+    },
     data() {
         return {
             store,
@@ -33,9 +35,9 @@ export default {
         getImagePath(imgPath) {
             return (this.ApiUrlImagePath + imgPath);
         },
-        getRating(rating){
-           rating = Math.floor(rating / 2);
-           return rating;
+        getRating(rating) {
+            rating = Math.floor(rating / 2);
+            return rating;
         }
 
     },
@@ -43,37 +45,44 @@ export default {
 </script>
 
 <template>
-    <div class="row">
-        <div class="col-12">
-            <label for="">Inserisci il nome del film</label>
-            <input type="text" v-model="store.searchText">
-            <button class="btn btn-success" @click="getMovies(store.searchText)">Avvia ricerca</button>
-        </div>
-        <div class="col-12">
-            <ul>
-                <li v-for="movie in store.moviesList">
-                    <h5>
-                        {{ movie.original_title }} {{ movie.original_name }}
-                    </h5>
-                    <h6>
-                        {{ movie.title }} {{ movie.name }}
-                    </h6>
-                    <p>
-                       <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" />
-                       <div v-else >
-                        <span><i class="fa-solid fa-globe"></i> Language not found </span>
-                       </div>
-                        Rating: {{ getRating(movie.vote_average) }}
-                    </p>
-                    <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
-                </li>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <label for="">Inserisci il nome del film</label>
+                <input type="text" v-model="store.searchText">
+                <button class="btn btn-success" @click="getMovies(store.searchText)">Avvia ricerca</button>
+            </div>
+            <div class="col-12">
+                <ul>
+                    <li v-for="movie in store.moviesList">
+                        <h5>
+                            Titolo Originale: {{ movie.original_title }} {{ movie.original_name }}
+                        </h5>
+                        <h6>
+                            Titolo: {{ movie.title }} {{ movie.name }}
+                        </h6>
+                        <p>
+                            lingua: <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" />
+                        <div v-else>
+                            <span><i class="fa-solid fa-globe"></i> Language not found </span>
+                        </div>
+                        </p>
+                        <p class="p-rating">
+                            <!-- <vue3starRatings v-model="movie.vote_average" /> -->
+                            Voto: {{ getRating(movie.vote_average) }}
+                        </p>
+                        <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
+                    </li>
 
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 
 </template>
 
 <style lang="scss" scoped>
+
+
 
 </style>
