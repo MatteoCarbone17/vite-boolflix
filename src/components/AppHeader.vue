@@ -69,7 +69,7 @@ export default {
                         </p>
                         <p class="p-rating">
                             <!-- <vue3starRatings v-model="movie.vote_average" /> -->
-                            Voto: {{ getRating(movie.vote_average) }}
+                            Voto: {{ getRating(movie.vote_average) }}/5
                         </p>
                         <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
                     </li>
