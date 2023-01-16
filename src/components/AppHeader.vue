@@ -47,14 +47,21 @@ export default {
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <label for="">Inserisci il nome del film</label>
-                <input type="text" v-model="store.searchText">
-                <button class="btn btn-success" @click="getMovies(store.searchText)">Avvia ricerca</button>
+            <div class="col-6 bg-dark p-3"> 
+                <h1 class="text-danger">
+                    BOOLFLIX
+                </h1>
             </div>
-            <div class="col-12">
+            <div class="col-6 bg-dark p-3 d-flex align-items-center justify-content-end">
+                <label class="me-2" for="">Inserisci il nome del film:</label>
+                <input class="me-2" type="text" v-model="store.searchText">
+                <button class="btn btn-primary ms-2" @click="getMovies(store.searchText)">Avvia ricerca</button>
+            </div>
+            <div class="col-12 mt-2">
                 <ul>
+                    <!-- "$data[myCondition ? 'name' : 'title']" ternario esempio -->
                     <li v-for="movie in store.moviesList">
+                        <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
                         <h5>
                             Titolo Originale: {{ movie.original_title }} {{ movie.original_name }}
                         </h5>
@@ -71,9 +78,7 @@ export default {
                             <!-- <vue3starRatings v-model="movie.vote_average" /> -->
                             Voto: {{ getRating(movie.vote_average) }}/5
                         </p>
-                        <img :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -82,7 +87,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
-
+li{
+    list-style-type: none;
+}
 
 </style>
