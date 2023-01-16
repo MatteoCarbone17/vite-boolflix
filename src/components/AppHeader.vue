@@ -1,12 +1,15 @@
 <script>
 import { store } from '../store.js'
 import axios from 'axios'
+
+
 export default {
     data() {
         return {
             store,
             apiKey: 'd375deb50bb5135ee140c55f9476e44c',
-            ApiUrl: 'https://api.themoviedb.org/3/search/multi?'
+            ApiUrl: 'https://api.themoviedb.org/3/search/multi?',
+            ApiUrlImagePath: 'https://image.tmdb.org/t/p/w342/'
         }
     },
     methods: {
@@ -23,6 +26,10 @@ export default {
 
                 });
         },
+
+        getImagePath(imgPath){
+        return (this.ApiUrlImagePath+imgPath);
+    },
 
     },
 }
@@ -45,9 +52,10 @@ export default {
                     {{  movie.title }} {{ movie.name }}
                    </h6>
                    <p>
-                     {{ movie.original_language }}
+                    {{ movie.original_language }}
                      Rating: {{ movie.vote_average  }}
                    </p>
+                   <img :src="getImagePath(movie.poster_path)" alt="" srcset="">
                 </li>
 
             </ul>
