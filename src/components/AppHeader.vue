@@ -6,7 +6,7 @@ export default {
         return {
             store,
             apiKey: 'd375deb50bb5135ee140c55f9476e44c',
-            ApiUrl: 'https://api.themoviedb.org/3/search/movie?'
+            ApiUrl: 'https://api.themoviedb.org/3/search/multi?'
         }
     },
     methods: {
@@ -39,10 +39,10 @@ export default {
             <ul>
                 <li v-for="movie in store.moviesList">
                    <h5>
-                    {{ movie.original_title }}
+                    {{ movie.original_title }} {{ movie.original_name  }}
                    </h5>
                    <h6>
-                    {{  movie.title }}
+                    {{  movie.title }} {{ movie.name }}
                    </h6>
                    <p>
                      {{ movie.original_language }}
