@@ -13,8 +13,8 @@ export default {
     <div class="row">
         <div class="col-12">
             <label for="">Inserisci il film </label>
-            <input type="text">
-            <button class="btn btn-success">cerca</button>
+            <input type="text" v-model="store.searchText" >
+            <button class="btn btn-success" @click="getApi(store.searchText)">cerca</button>
         </div>
         <div class="col-12">
             <ul>

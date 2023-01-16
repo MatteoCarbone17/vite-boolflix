@@ -19,11 +19,11 @@ export default {
     }
   },
   methods: {
-    getApi() {
+    getApi(searchQuery) {
       axios.get(this.ApiUrl, {
         params: {
           api_key: this.apiKey,
-          query: 'harry',
+          query: searchQuery,
         }
       })
         .then((response) => {
@@ -36,7 +36,7 @@ export default {
   },
 
   created() {
-    this.getApi()
+    // this.getApi(searchQuery)
 
   }
 
@@ -46,6 +46,11 @@ export default {
 
 
 <template>
+  <!-- <div class="col-12">
+            <label for="">Inserisci il film </label>
+            <input type="text" v-model="store.searchText" >
+            <button class="btn btn-success" @click="getApi(store.searchText)">cerca</button>
+  </div> -->
   <div>
     <AppHeader />
   </div>
