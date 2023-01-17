@@ -34,16 +34,20 @@ export default {
 
                 });
         },
-        getImagePath(imgPath) {
-            return (this.ApiUrlImagePath + imgPath);
+
+        getImagePath: function(imgPath,secondImgPath) {
+        return new URL(this.ApiUrlImagePath + imgPath,this.ApiUrlImagePath + secondImgPath, import.meta.url).href;
         },
+
+        getIconPath: function(imgPath) {
+        return new URL(`../assets/img/flag_icon/${imgPath}.png`, import.meta.url).href;
+        },
+
         getRating(rating) {
             rating = Math.floor(rating / 2);
             return rating;
         },
-        getIconPath: function(imgPath) {
-        return new URL(`../assets/img/flag_icon/${imgPath}.png`, import.meta.url).href;
-    }
+
 
     },
 }
@@ -59,15 +63,18 @@ export default {
             </div>
             <div class="col-6 bg-dark p-3 d-flex align-items-center justify-content-end">
                 <label class="me-2" for="">Inserisci il nome del film:</label>
-                <input class="me-2" type="text" v-model="store.searchText">
-                <button class="btn btn-primary ms-2" @click="getMovies(store.searchText)">Avvia ricerca</button>
+                <input class="me-2" type="text"  @keypress="getMovies(store.searchText)"  v-model="store.searchText">
+                <!-- <button class="btn btn-primary ms-2"  @click="getMovies(store.searchText)" >Avvia ricerca</button> -->
             </div>
             <div class="col-12 mt-2">
                 <ul class="d-flex flex-wrap" >
                     <!-- "$data[myCondition ? 'name' : 'title']" ternario esempio -->
                     <li v-for="movie in store.moviesList">
-                        <img v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)"  :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
-                        <div v-else class="bg-black text-light info-container" >
+                        <!-- v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" -->
+                        <img  v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" :src="getImagePath(movie.backdrop_path,movie.poster_path)" alt="" srcset="">
+                        <!-- '''' soluzione''' alle immagini che non si visualizzano -->
+                        <!-- <img v-else-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" :src="getImagePath(movie.poster_path)" alt="" srcset=""> -->
+                        <div v-else  class="bg-black text-light info-container" >
                             <h6>
                                 Titolo Originale: {{ movie.original_title }} {{ movie.original_name }}
                                 <br>
@@ -83,7 +90,8 @@ export default {
                             </div>
                             <p class="p-rating">
                                 <!-- <vue3starRatings v-model="movie.vote_average" /> -->
-                                Voto: {{ getRating(movie.vote_average) }}/5
+                                <!-- <i v-for="getRating(movie.vote_average) in 5" class="fa-solid fa-star"> {{ getRating(movie.vote_average) }}</i> -->
+                                {{ getRating(movie.vote_average) }}/5 <i class="fa-solid fa-star" ></i> 
                             </p>
                         </div>
                     </li>
@@ -99,12 +107,13 @@ ul{
     margin-bottom: 2rem;
 }
 
-li {
+li{
     list-style-type: none;
     width: calc(100% / 7 );
     img{
         margin-bottom: 1rem;
     }
+    
 }
 div.info-container{
    margin: 1rem;
