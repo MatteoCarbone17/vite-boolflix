@@ -1,13 +1,13 @@
 <script>
 import { store } from '../store.js'
 import axios from 'axios'
-import LangFlag from 'vue-lang-code-flags'
+// import LangFlag from 'vue-lang-code-flags'
 // import vue3starRatings from "vue3-star-ratings";
 
 
 export default {
     components: {
-        LangFlag,
+        // LangFlag,
         // vue3starRatings,
     },
     data() {
@@ -16,6 +16,7 @@ export default {
             apiKey: 'd375deb50bb5135ee140c55f9476e44c',
             ApiUrl: 'https://api.themoviedb.org/3/search/multi?',
             ApiUrlImagePath: 'https://image.tmdb.org/t/p/w342/',
+            iconFlagList: ['en','it', 'es','fr','ch', 'us' ],
             hover: false,
         }
     },
@@ -39,7 +40,10 @@ export default {
         getRating(rating) {
             rating = Math.floor(rating / 2);
             return rating;
-        }
+        },
+        getIconPath: function(imgPath) {
+        return new URL(`../assets/img/flag_icon/${imgPath}.png`, import.meta.url).href;
+    }
 
     },
 }
@@ -70,9 +74,10 @@ export default {
                                 Titolo: {{ movie.title }} {{ movie.name }}
                             </h6>
                             <p>
-                                {{ movie.overview }}
+                                 Overview:  {{ movie.overview }}
                             </p>
-                            <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" />
+                            <img :src="getIconPath(movie.original_language)"  v-if="iconFlagList.includes(movie.original_language)"  alt="" srcset="">
+                            <!-- <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" /> -->
                             <div v-else>
                                 <span><i class="fa-solid fa-globe"></i> Language not found </span>
                             </div>
@@ -107,5 +112,6 @@ div.info-container{
    padding: 1rem;
 
 }
+
 
 </style>
