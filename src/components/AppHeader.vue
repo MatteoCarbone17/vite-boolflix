@@ -16,7 +16,7 @@ export default {
             apiKey: 'd375deb50bb5135ee140c55f9476e44c',
             ApiUrl: 'https://api.themoviedb.org/3/search/multi?',
             ApiUrlImagePath: 'https://image.tmdb.org/t/p/w342/',
-            indexHover: true,
+            hover: false,
         }
     },
     methods: {
@@ -59,23 +59,23 @@ export default {
                 <button class="btn btn-primary ms-2" @click="getMovies(store.searchText)">Avvia ricerca</button>
             </div>
             <div class="col-12 mt-2">
-                <ul>
+                <ul class="d-flex flex-wrap" >
                     <!-- "$data[myCondition ? 'name' : 'title']" ternario esempio -->
                     <li v-for="movie in store.moviesList">
-                        <img v-if="(indexHover)" @mouseover="(indexHover = false)" @mouseleave="(indexHover = true)"  :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
-                        <div v-else class="bg-black text-light" >
-                            <h5>
-                                Titolo Originale: {{ movie.original_title }} {{ movie.original_name }}
-                            </h5>
+                        <img v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)"  :src="getImagePath(movie.backdrop_path)" alt="" srcset="">
+                        <div v-else class="bg-black text-light info-container" >
                             <h6>
+                                Titolo Originale: {{ movie.original_title }} {{ movie.original_name }}
+                                <br>
                                 Titolo: {{ movie.title }} {{ movie.name }}
                             </h6>
                             <p>
-                                lingua: <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" />
+                                {{ movie.overview }}
+                            </p>
+                            <lang-flag v-if="(movie.original_language)" :iso="movie.original_language" />
                             <div v-else>
                                 <span><i class="fa-solid fa-globe"></i> Language not found </span>
                             </div>
-                            </p>
                             <p class="p-rating">
                                 <!-- <vue3starRatings v-model="movie.vote_average" /> -->
                                 Voto: {{ getRating(movie.vote_average) }}/5
@@ -90,8 +90,22 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+ul{
+    margin-bottom: 2rem;
+}
+
 li {
     list-style-type: none;
+    width: calc(100% / 7 );
+    img{
+        margin-bottom: 1rem;
+    }
+}
+div.info-container{
+   margin: 1rem;
+   height: 98%;
+   padding: 1rem;
+
 }
 
 </style>
