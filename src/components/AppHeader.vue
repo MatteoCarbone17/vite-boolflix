@@ -35,12 +35,12 @@ export default {
                 });
         },
 
-        getImagePath: function(imgPath,secondImgPath) {
-        return new URL(this.ApiUrlImagePath + imgPath,this.ApiUrlImagePath + secondImgPath, import.meta.url).href;
+        getImagePath: function(imgPath) {
+        return new URL((this.ApiUrlImagePath + imgPath), import.meta.url).href;
         },
 
-        getIconPath: function(imgPath) {
-        return new URL(`../assets/img/flag_icon/${imgPath}.png`, import.meta.url).href;
+        getIconPath: function(iconPath) {
+        return new URL(`../assets/img/flag_icon/${iconPath}.png`, import.meta.url).href;
         },
 
         getRating(rating) {
@@ -71,7 +71,7 @@ export default {
                     <!-- "$data[myCondition ? 'name' : 'title']" ternario esempio -->
                     <li v-for="movie in store.moviesList">
                         <!-- v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" -->
-                        <img  v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" :src="getImagePath(movie.backdrop_path,movie.poster_path)" alt="" srcset="">
+                        <img  v-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" :src="getImagePath(movie.poster_path)" alt="" srcset="">
                         <!-- '''' soluzione''' alle immagini che non si visualizzano -->
                         <!-- <img v-else-if="(!hover)" @mouseover="(hover = true)" @mouseleave="(hover = false)" :src="getImagePath(movie.poster_path)" alt="" srcset=""> -->
                         <div v-else  class="bg-black text-light info-container" >
@@ -90,7 +90,7 @@ export default {
                             </div>
                             <p class="p-rating">
                                 <!-- <vue3starRatings v-model="movie.vote_average" /> -->
-                                <!-- <i v-for="getRating(movie.vote_average) in 5" class="fa-solid fa-star"> {{ getRating(movie.vote_average) }}</i> -->
+                                 <!-- <i v-for="n in getRating(movie.vote_average) " class="fa-solid fa-star"> {{ getRating(movie.vote_average) }}</i>  -->
                                 {{ getRating(movie.vote_average) }}/5 <i class="fa-solid fa-star" ></i> 
                             </p>
                         </div>
@@ -115,6 +115,7 @@ li{
     }
     
 }
+
 div.info-container{
    margin: 1rem;
    height: 98%;
